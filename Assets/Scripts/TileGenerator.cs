@@ -32,6 +32,8 @@ public class TileGenerator : MonoBehaviour
 
     private Transform boundaryHolder;
     private Transform blockWallHolder;
+    private Transform itemHolder;
+    private Transform enemyHolder;
     private GameManager gameManager;
 
     public void Awake()
@@ -41,8 +43,10 @@ public class TileGenerator : MonoBehaviour
 
     public void GenerateTiles()
     {
-        boundaryHolder = new GameObject("Constructions").transform;
+        boundaryHolder = new GameObject("Boundary").transform;
         blockWallHolder = new GameObject("Walls").transform;
+        itemHolder = new GameObject("Items").transform;
+        enemyHolder = new GameObject("Enemies").transform;
 
         float diffOffset = Mathf.Log(gameManager.level, 2) / 50;
         Debug.Log("Difficulty in this stage: " + diffOffset);
@@ -78,17 +82,17 @@ public class TileGenerator : MonoBehaviour
                     // Soda
                     else if (luckyLevel >= 0.94f + diffOffset)
                     {
-                        Instantiate(soda, nowPos, Quaternion.identity);
+                        (Instantiate(soda, nowPos, Quaternion.identity) as GameObject).transform.SetParent(itemHolder);
                     }
                     // Food
                     else if (luckyLevel >= 0.82f + diffOffset)
                     {
-                        Instantiate(food, nowPos, Quaternion.identity);
+                        (Instantiate(food, nowPos, Quaternion.identity) as GameObject).transform.SetParent(itemHolder);
                     }
                     // Easy Enemy
                     else if (luckyLevel <= 0.02f + diffOffset)
                     {
-                        Instantiate(enemies[0], nowPos, Quaternion.identity);
+                        (Instantiate(enemies[0], nowPos, Quaternion.identity) as GameObject).transform.SetParent(enemyHolder);
                     }
                     // Hard Enemy
                     else if (luckyLevel <= 0.05f + diffOffset)
@@ -96,7 +100,7 @@ public class TileGenerator : MonoBehaviour
                         // Spawn Protection
                         if (i >= 3 || j >= 3)
                         {
-                            Instantiate(enemies[1], nowPos, Quaternion.identity);
+                            (Instantiate(enemies[1], nowPos, Quaternion.identity) as GameObject).transform.SetParent(enemyHolder);
                         }
                     }
 

@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public float level = 1;
-    public RawImage fader;
+    public Fader fader;
     public static GameManager instance;
 
     private TileGenerator tileGenerator;
@@ -54,5 +54,21 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
+        fader.FadeOut();
+        StartCoroutine(GameOverCoro());
+    }
+
+    public void RestartGame()
+    {
+        Time.timeScale = 1.0f;
+
+        instance.level = 0;
+        NextStage();
+    }
+
+    public IEnumerator GameOverCoro()
+    {
+        yield return new WaitForSeconds(0.8f);
+        Time.timeScale = 0f;
     }
 }

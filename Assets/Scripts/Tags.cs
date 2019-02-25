@@ -3,6 +3,7 @@
 /// </summary>
 public class Tags
 {
+    public static string Player = "Player";
     public static string Food = "Food";
     public static string Exit = "Exit";
     public static string Enemy = "Enemy";
